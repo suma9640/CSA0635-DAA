@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<math.h>
+int chess_board[20],count;
+void n_Queen(int row,int n);
+void print_board(int n)
+{
+  int i,j;
+  printf("\n\n N-Queen Solution %d : \n\n",++count);
+ 
+  for(i=1;i<=n;i++)
+  {
+   printf("\t%d",i);
+  }
+  for(i=1;i<=n;i++)
+  {
+   printf("\n\n%d\t",i);
+   for(j=1;j<=n;j++)
+   {
+    if(chess_board[i]==j)
+     printf("Q\t");
+    else
+     printf("-\t");
+   }
+  }
+}
+int check_place(int row,int col)
+{
+  int i;
+  for(i=1;i<=row-1;i++)
+  {
+   if(chess_board[i] == col)
+    return 0;
+   else
+    if(abs(chess_board[i] - col) == abs(i - row))
+     return 0;
+  }
+  return 1;
+}
+void n_Queen(int row,int n)
+{
+  int col;
+  for(col=1;col<=n;col++)
+  {
+   if(check_place(row,col))
+   {
+     chess_board[row] = col;
+    if(row==n)
+    print_board(n);
+     
+    else  
+     n_Queen(row+1,n);
+   }
+  } 
+}
+ 
+ 
+int main()
+{
+  int n;
+  printf("\nEnter Number of n_Queens : ");
+  scanf("%d",&n);
+  n_Queen(1,n);
+  return 0;
+}
