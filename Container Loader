@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define NUM_ITEMS 5
+#define NUM_CONTAINERS 3
+int items[NUM_ITEMS] = {10, 5, 7, 8, 3};
+int containers[NUM_CONTAINERS];
+bool loadItems(int idx) {
+    if (idx == NUM_ITEMS)
+        return true;
+    for (int i = 0; i < NUM_CONTAINERS; i++) {
+        if (containers[i] >= items[idx]) {
+            containers[i] -= items[idx];
+            if (loadItems(idx + 1))
+                return true;
+            containers[i] += items[idx];
+        }
+    }
+    return false;
+}
+int main() {
+    for (int i = 0;i <NUM_CONTAINERS;i++)
+        containers[i] = 15;
+    if (loadItems(0))
+        printf("Items can be loaded into containers.\n");
+    else
+        printf("Items cannot be loaded into containers.\n");
+    return 0;
+}
